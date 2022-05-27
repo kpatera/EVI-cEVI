@@ -8,7 +8,7 @@ require(ggplot2)
 # source("cEVI/deviant_cEVI.R")
 # source("cEVI/evifcut_cEVI.R")
 # source("cEVI/indic_cEVI.R")
- source("cEVI/cEVI_fun.R")
+# source("cEVI/cEVI_fun.R")
 # source("cEVI/cEVI_fun.R")
 # source("cEVI/evi.graphs.comb.R")
 
