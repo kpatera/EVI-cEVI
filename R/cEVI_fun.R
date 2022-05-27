@@ -22,7 +22,7 @@ cEVI_fun<-function(cases,lag_n,c_n){
   cevi <- rep(NA, length(cases))
   for(k in (lag_n+1):(length(cases)-(lag_n+1))){
     enu=mean(cases[(k+1):(k+lag_n)]-cases[(k):(k-(lag_n))],na.rm = T)
-    den1=sd(cases[(k):(k-(lag_n))])^2/(length(cases[(k):(k-(lag_n))]))
+    den1=sd(cases[(k):(k-(lag_n-1))])^2/(length(cases[(k):(k-(lag_n-1))]))
     den2=sd(cases[(k+1):(k+lag_n)])^2/(length(cases[(k+1):(k+lag_n)]))
 
     # Spectral variances more appropriate but more time consuming
@@ -33,3 +33,4 @@ cEVI_fun<-function(cases,lag_n,c_n){
   }
   return(cevi)
 }
+

@@ -1,15 +1,16 @@
 # Load functions and rest of EVI package
-remotes::install_github("ku-awdc/EVI",force=T)
-require(EVI)
+remotes::install_github("kpatera/EVI-cEVI",force=T)
+#require(EVI)
+library(cEVIplus)
 require(gridExtra)
 require(ggplot2)
 
-source("cEVI/deviant_cEVI.R")
-source("cEVI/evifcut_cEVI.R")
-source("cEVI/indic_cEVI.R")
-source("cEVI/cEVI_fun.R")
-source("cEVI/cEVI_fun.R")
-source("cEVI/evi.graphs.comb.R")
+# source("cEVI/deviant_cEVI.R")
+# source("cEVI/evifcut_cEVI.R")
+# source("cEVI/indic_cEVI.R")
+# source("cEVI/cEVI_fun.R")
+# source("cEVI/cEVI_fun.R")
+# source("cEVI/evi.graphs.comb.R")
 
 # Load the mot example
 
@@ -32,7 +33,14 @@ dim(Colombia)
 dim(India)
 dim(France)
 
+library(readr)
+gs_27522 <- read_csv("local/globalcases.csv")
+gs_27522$
 
+Afghanistan<-gs_27522[,gs_27522$name=="Afghanistan"]
+Colombia<-
+India<-
+France<-
 ### Run EVI cEVI for afghanistan
 
 
@@ -40,7 +48,7 @@ dim(France)
 #tmp_EVI_af=deviant(new_cases = Afghanistan$Cases)
 #save(tmp_EVI_af,file = "tmp_EVI_af.rdata")
 load("tmp_EVI_af.rdata")
-tmp_cEVI_af=deviant_cEVI(new_cases = Afghanistan$Cases,lag_max = 40)
+#tmp_cEVI_af=deviant_cEVI(new_cases = Afghanistan$Cases,lag_max = 40)
 #save(tmp_cEVI_af,file = "tmp_cEVI_af.rdata")
 load("tmp_cEVI_af.rdata")
 
@@ -72,9 +80,9 @@ graph_co<-evi.graphs.comb(tmp_cEVI_co,tmp_EVI_co,ln = T, EVI1.lab = "cEVI", EVI2
 
 par(mfrow=c(1,2))
 plot(1:789,tmp_EVI_co$ppv,type = 'l',lwd=3)
-lines(1:789,tmp_cEVI_cosmallr$ppv,type = 'l',lty=3,lwd=3)
+lines(1:789,tmp_cEVI_co$ppv,type = 'l',lty=3,lwd=3)
 plot(1:789,tmp_EVI_co$npv,type = 'l',lwd=3)
-lines(1:789,tmp_cEVI_cosmallr$npv,type = 'l',lty=3,lwd=3)
+lines(1:789,tmp_cEVI_co$npv,type = 'l',lty=3,lwd=3)
 
 
 
@@ -100,10 +108,10 @@ lines(1:790,tmp_cEVI_in$npv,type = 'l',lty=3,lwd=3)
 #tmp_EVI_fr=deviant(new_cases = France$Cases)
 #save(tmp_EVI_fr,file = "tmp_EVI_fr.rdata")
 load("tmp_EVI_fr.rdata")
-tmp_cEVI_fr=deviant_cEVI(new_cases = France$Cases,lag_max = 40,method = "cEVI")
+tmp_cEVI_fr=deviant(new_cases = France$Cases,lag_max = 40,method = "cEVI")
 #save(tmp_cEVI_fr,file = "tmp_cEVI_fr.rdata")
 load("tmp_cEVI_fr.rdata")
-graph_fr<-evi.graphs.comb(tmp_cEVI_fr,tmp_EVI_fr,EVI1.lab = "cEVI", EVI2.lab = "EVI",EVI3.lab = "cEVI+",EVI.country = "France")
+graph_fr<-evi.graphs.comb(tmp_EVI_fr,tmp_EVI_fr,EVI1.lab = "cEVI", EVI2.lab = "EVI",EVI3.lab = "cEVI+",EVI.country = "France")
 
 par(mfrow=c(1,2))
 plot(1:789,tmp_EVI_fr$ppv,type = 'l',lwd=3)
