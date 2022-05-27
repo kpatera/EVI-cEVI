@@ -1,9 +1,9 @@
 #' Calculation of the Epidemic Volatility Index
 #'
 #' Calculates the relative change in the standard deviation between two consecutive rolling windows.
-#' 
-#' @return 
-#' Returns a vector of the relative changes in the standard deviation between two consecutive rolling windows for a time series.  
+#'
+#' @return
+#' Returns a vector of the relative changes in the standard deviation between two consecutive rolling windows for a time series.
 #'
 #' @param rollsd numeric vector - returned and stored as roll from the rollsd() function.
 #'
@@ -15,7 +15,7 @@
 #' ev = evi(rollsd = roll)
 #'
 #' @export
-#' 
+#'
 #' @references
 #' Kostoulas, P., Meletis, E., Pateras, K. et al. The epidemic volatility index, a novel early warning tool for identifying new waves in an epidemic. Sci Rep 11, 23775 (2021). \doi{10.1038/s41598-021-02622-3}
 

@@ -1,5 +1,5 @@
 #' True status definition
-#' 
+#'
 #' This function defines the true status based on the case definition.
 #'
 #' @return
@@ -24,7 +24,7 @@ status = function(cases, r) {
   status=rep(NA,length(cases))
   status[1]=NA
   for (i in 2:(length(cases)-w_s)){
-    if (mean(cases[(i-min((i-1),w_s)):(i-1)])<=ratio*mean((cases[i:(i+min(i,(w_s-1)))])))
+    if (mean(cases[(i-min((i-1),w_s)):(i-1)])<ratio*mean((cases[i:(i+min(i,(w_s-1)))]))) # deleted an equal sign
     {status[i]=1}
     else
     {status[i]=0}

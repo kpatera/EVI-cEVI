@@ -6,7 +6,10 @@
 \alias{EVI-package}
 \title{EVI: Epidemic Volatility Index as an Early-Warning Tool}
 \description{
-Implementation of the epidemic volatility index (EVI), as discussed by Kostoulas et. al. (2021). EVI is a new, conceptually simple, early warning tool for oncoming epidemic waves. EVI is based on the volatility of newly reported cases per unit of time, ideally per day, and issues an early warning when the volatility change rate exceeds a threshold.
+Implementation of the epidemic volatility index (EVI), as 
+    discussed by Kostoulas et. al. (2021). EVI is a new, conceptually simple, early warning tool for oncoming epidemic waves. 
+    EVI is based on the volatility of newly reported cases per unit of time,
+    ideally per day, and issues an early warning when the volatility change rate exceeds a threshold.
 }
 \seealso{
 Useful links:
