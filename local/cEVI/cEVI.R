@@ -34,22 +34,21 @@ dim(India)
 dim(France)
 
 library(readr)
-gs_27522 <- read_csv("local/globalcases.csv")
-gs_27522$
-
-Afghanistan<-gs_27522[,gs_27522$name=="Afghanistan"]
-Colombia<-
-India<-
-France<-
+gs_27522 <- as.data.frame(read_csv("globalcases.csv"))
+Afghanistan<-Colombia<-India<-France<-NULL
+Afghanistan<-t(gs_27522[gs_27522$`Country/Region`=="Afghanistan",][5:dim(gs_27522)[2]])
+Colombia<-t(gs_27522[gs_27522$`Country/Region`=="Colombia",][5:dim(gs_27522)[2]])
+India<-t(gs_27522[gs_27522$`Country/Region`=="India",][5:dim(gs_27522)[2]])
+France<-t(gs_27522[gs_27522$`Country/Region`=="France",][5:dim(gs_27522)[2]][12,])
 ### Run EVI cEVI for afghanistan
 
 
 # AFGHANISTAN
-#tmp_EVI_af=deviant(new_cases = Afghanistan$Cases)
-#save(tmp_EVI_af,file = "tmp_EVI_af.rdata")
-load("tmp_EVI_af.rdata")
-#tmp_cEVI_af=deviant_cEVI(new_cases = Afghanistan$Cases,lag_max = 40)
-#save(tmp_cEVI_af,file = "tmp_cEVI_af.rdata")
+tmp_EVI_af=deviant(new_cases = Afghanistan,cum = TRUE)
+save(tmp_EVI_af,file = "tmp_EVI_af_new.rdata")
+load("tmp_EVI_af_new.rdata")
+tmp_cEVI_af=deviant_cEVI(new_cases = Afghanistan$Cases,lag_max = 40, cum=TRUE)
+save(tmp_cEVI_af,file = "tmp_cEVI_af.rdata")
 load("tmp_cEVI_af.rdata")
 
 names(Afghanistan)[7:8]<-c("ppv","npv")
@@ -108,10 +107,10 @@ lines(1:790,tmp_cEVI_in$npv,type = 'l',lty=3,lwd=3)
 #tmp_EVI_fr=deviant(new_cases = France$Cases)
 #save(tmp_EVI_fr,file = "tmp_EVI_fr.rdata")
 load("tmp_EVI_fr.rdata")
-tmp_cEVI_fr=deviant(new_cases = France$Cases,lag_max = 40,method = "cEVI")
+tmp_cEVI_fr=deviant(new_cases = France$Cases[1:70],lag_max = 40,method = "cEVI")
 #save(tmp_cEVI_fr,file = "tmp_cEVI_fr.rdata")
 load("tmp_cEVI_fr.rdata")
-graph_fr<-evi.graphs.comb(tmp_EVI_fr,tmp_EVI_fr,EVI1.lab = "cEVI", EVI2.lab = "EVI",EVI3.lab = "cEVI+",EVI.country = "France")
+graph_fr<-evi.graphs.comb(tmp_cEVI_fr,tmp_EVI_fr,EVI1.lab = "cEVI", EVI2.lab = "EVI",EVI3.lab = "cEVI+",EVI.country = "France")
 
 par(mfrow=c(1,2))
 plot(1:789,tmp_EVI_fr$ppv,type = 'l',lwd=3)
@@ -122,6 +121,9 @@ lines(1:789,tmp_cEVI_fr$npv,type = 'l',lty=3,lwd=3)
 pdf("Figure1.pdf",width = 12,height = 12)
 grid.arrange(graph_af,graph_co,graph_in,graph_fr)
 dev.off()
+
+
+
 
 
 # COLOMBIA with smaller ratio #####

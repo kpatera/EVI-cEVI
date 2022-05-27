@@ -47,7 +47,7 @@
 #' @references
 #' Pateras Konstantinos, Meletis Eleftherios and Kostoulas Polychronis, The convergence epidemic index, an early warning tool for identifying waves in an epidemic, 2022
 
-deviant=function(new_cases, cum = FALSE, r_a=7, r=0.2, lag_max=30, method = "cEVI"){
+deviant_plus=function(new_cases, cum = FALSE, r_a=7, r=0.2, lag_max=30, method = "cEVI"){
   #source("mova.r")
   #source("medvol.r")
   #source("evi.r")
