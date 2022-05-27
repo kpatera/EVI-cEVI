@@ -1,7 +1,7 @@
-Package: EVI
+Package: EVI-cEVI
 Title: Epidemic Volatility Index as an Early-Warning Tool
-Version: 0.1.1-4
-Date: 2022-03-30
+Version: 0.2.1-4
+Date: 2022-05-27
 Authors@R: 
     c(
     person(given = "Eletherios",
@@ -12,10 +12,6 @@ Authors@R:
            family = "Pateras",
            role = c("aut"),
            email = "kostas.pateras@gmail.com"),
-    person(given = "Paolo",
-           family = "Eusebi",
-           role = c("aut"),
-           email = "paoloeusebi@gmail.com"),
     person(given = "Matt",
            family = "Denwood",
            role = c("aut"),
