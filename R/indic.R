@@ -24,7 +24,7 @@
 #' @references
 #' Kostoulas, P., Meletis, E., Pateras, K. et al. The epidemic volatility index, a novel early warning tool for identifying new waves in an epidemic. Sci Rep 11, 23775 (2021). \doi{10.1038/s41598-021-02622-3}
 
-indic=function (evi=NA, cevi=NA, cut, cases)
+indic=function (evi=NA, cevi=NA, cut, cases, method="EVI")
 {
 
   if(method=="EVI"){
