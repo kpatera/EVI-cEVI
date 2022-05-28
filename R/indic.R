@@ -24,25 +24,30 @@
 #' @references
 #' Kostoulas, P., Meletis, E., Pateras, K. et al. The epidemic volatility index, a novel early warning tool for identifying new waves in an epidemic. Sci Rep 11, 23775 (2021). \doi{10.1038/s41598-021-02622-3}
 
-indic = function(evi=NA, cevi=NA, cut, cases, method="EVI") {
+indic=function (evi=NA, cevi=NA, cut, cases)
+{
 
   if(method=="EVI"){
-    ind=rep(NA,length(evi))
-    for (i in 3:length(evi)){
-      if (evi[i]>=cut && cases[i]>mean(cases[i:(i-min(7,i))]))
-      {ind[i]=1}
-      else
-      {ind[i]=0}
+    ind = rep(NA, length(evi))
+    for (i in 3:length(evi)) {
+      if (evi[i] >= cut && cases[i] > mean(cases[i:(i - min(7,i))])){
+        ind[i] = 1
+      }
+      else {
+        ind[i] = 0
+      }
     }
   }
 
   if(method=="cEVI"){
     ind <- rep(NA,length(cevi))
+
     for (i in 3:length(cevi)) {
-      if (!is.na(cevi[i]) && cevi[i] ==1 && (!is.na(cases[i]) & cases[i] > mean(cases[i:(i - min(7, i))])))
-      {ind[i] <- 1}
-      else
-      {ind[i] <- 0}
+      if (!is.na(cevi[i]) && cevi[i] ==1 && (!is.na(cases[i]) & cases[i] > mean(cases[i:(i - min(7, i))]))){
+        ind[i] <- 1
+      }else{
+        ind[i] <- 0
+      }
     }
   }
 
@@ -50,21 +55,22 @@ indic = function(evi=NA, cevi=NA, cut, cases, method="EVI") {
   if(method=="cEVIplus"){
     ind1=ind=rep(NA,length(evi))
     for (i in 3:length(evi)){
-      if (evi[i]>=cut && cases[i]>mean(cases[i:(i-min(7,i))]))
-      {ind1[i]=1}
-      else
-      {ind1[i]=0}
+      if (evi[i]>=cut && cases[i]>mean(cases[i:(i-min(7,i))])){
+        ind1[i]=1
+      }else{
+        ind1[i]=0
+      }
     }
     ind2 <- rep(NA,length(cevi))
     for (i in 3:length(cevi)) {
-      if (!is.na(cevi[i]) && cevi[i] ==1 && (!is.na(cases[i]) & cases[i] > mean(cases[i:(i - min(7, i))])))
-      {ind2[i] <- 1}
-      else
-      {ind2[i] <- 0}
+      if (!is.na(cevi[i]) && cevi[i] ==1 && (!is.na(cases[i]) & cases[i] > mean(cases[i:(i - min(7, i))]))){
+        ind2[i] <- 1
+      }else{
+        ind2[i] <- 0
+      }
     }
     ind=max((ind1+ind2),1)
   }
-
 
   return(ind)
 }

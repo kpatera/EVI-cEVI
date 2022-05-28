@@ -23,15 +23,15 @@ require(ggplot2)
 #tmp_EVI_ita=deviant(new_cases = Italy$Cases)
 #tmp_cEVI_ita=deviant_plus(new_cases = Italy$Cases,lag_max = 40)
 
-# library(readr)
-# Afghanistan <- data.frame(read_csv("Afghanistan_2022-03-23_file.csv"))
-# Colombia <- data.frame(read_csv("Colombia_2022-03-23_file.csv"))
-# India <- data.frame(read_csv("India_2022-03-23_file.csv"))
-# France <- data.frame(read_csv("France_2022-03-23_file.csv"))
-# dim(Afghanistan)
-# dim(Colombia)
-# dim(India)
-# dim(France)
+ library(readr)
+ Afghanistan2 <- data.frame(read_csv("Afghanistan_2022-03-23_file.csv"))
+ Colombia2 <- data.frame(read_csv("Colombia_2022-03-23_file.csv"))
+ India2 <- data.frame(read_csv("India_2022-03-23_file.csv"))
+ France2 <- data.frame(read_csv("France_2022-03-23_file.csv"))
+ dim(Afghanistan2)
+ dim(Colombia2)
+ dim(India2)
+ dim(France2)
 
 library(readr)
 gs_27522 <- as.data.frame(read_csv("globalcases.csv"))
@@ -44,16 +44,15 @@ France<-as.vector(t(gs_27522[gs_27522$`Country/Region`=="France",][5:dim(gs_2752
 
 
 # AFGHANISTAN
-tmp_EVI_af=deviant_plus(new_cases = Afghanistan[1:100],cum = TRUE,method = "EVI")
+tmp_EVI_af=deviant(new_cases = Afghanistan[1:100],cum = TRUE)
 save(tmp_EVI_af,file = "tmp_EVI_af_new.rdata")
 load("tmp_EVI_af_new.rdata")
-tmp_cEVI_af=deviant(new_cases = Afghanistan[1:100],lag_max = 40, cum=TRUE,method = "EVI")
+tmp_cEVI_af=deviant_plus(new_cases = Afghanistan,lag_max = 40, cum=TRUE,method = "cEVI")
 save(tmp_cEVI_af,file = "tmp_cEVI_af_new.rdata")
-load("tmp_cEVI_af_new.rdata")
+load("tmp_cEVI_af.rdata")
 
-names(Afghanistan)[7:8]<-c("ppv","npv")
-
-graph_af<-evi.graphs.comb(tmp_cEVI_af,tmp_EVI_af,ln = T,EVI1.lab = "cEVI", EVI2.lab = " EVI", EVI3.lab = "cEVI+",EVI.country = "Afghanistan")
+names(Afghanistan2)[7:8]<-c("ppv","npv")
+graph_af<-evi.graphs.comb(tmp_cEVI_af,Afghanistan2,ln = T,EVI1.lab = "cEVI", EVI2.lab = " EVI", EVI3.lab = "cEVI+",EVI.country = "Afghanistan")
 
 tmp_EVI_af$case_def<-c(round(tmp_EVI_af$EVI[-1]/tmp_EVI_af$EVI[-length((tmp_EVI_af$EVI))]-1,3)*100>20,NA)
 tmp_cEVI_af$case_def<-c(round(tmp_cEVI_af$EVI[-1]/tmp_cEVI_af$EVI[-length((tmp_cEVI_af$EVI))]-1,3)*100>20,NA)
@@ -65,17 +64,17 @@ plot(1:789,tmp_EVI_af$npv,type = 'l',lwd=3)
 lines(1:789,tmp_cEVI_af$npv,type = 'l',lty=3,lwd=3)
 
 # COLOMBIA
-#tmp_EVI_co=deviant(new_cases = Colombia$Cases)
+tmp_EVI_co=deviant(new_cases = Colombia[1:150],cum = TRUE)
 #save(tmp_EVI_co,file = "tmp_EVI_co.rdata")
 load("tmp_EVI_co.rdata")
 #tmp_cEVI_co=deviant_cEVI(new_cases = Colombia$Cases,lag_max = 40)
 #save(tmp_cEVI_co,file = "tmp_cEVI_co.rdata")
 load("tmp_cEVI_co.rdata")
 
-names(Colombia)[7:8]<-c("ppv","npv")
+names(Colombia2)[7:8]<-c("ppv","npv")
 
 
-graph_co<-evi.graphs.comb(tmp_cEVI_co,tmp_EVI_co,ln = T, EVI1.lab = "cEVI", EVI2.lab = " EVI", EVI3.lab = "cEVI+",EVI.country = "Colombia")
+graph_co<-evi.graphs.comb(tmp_cEVI_co,Colombia2,ln = T, EVI1.lab = "cEVI", EVI2.lab = " EVI", EVI3.lab = "cEVI+",EVI.country = "Colombia")
 
 par(mfrow=c(1,2))
 plot(1:789,tmp_EVI_co$ppv,type = 'l',lwd=3)
@@ -86,7 +85,7 @@ lines(1:789,tmp_cEVI_co$npv,type = 'l',lty=3,lwd=3)
 
 
 # INDIA
-#tmp_EVI_in=deviant(new_cases = India$Cases)
+tmp_EVI_in=deviant(new_cases = India[1:150],cum = TRUE)
 #save(tmp_EVI_in,file = "tmp_EVI_in.rdata")
 load("tmp_EVI_in.rdata")
 #tmp_cEVI_in=deviant_cEVI(new_cases = India$Cases,lag_max = 40)
