@@ -32,19 +32,22 @@ evifcut=function (evi=NA, cevi=NA, cases, cut=NA, r,method="EVI")
   ratio = 1/(1 + r)
   test_p = rep(NA, length(cases))
   true_p = rep(NA, length(cases))
-  for (i in w_s:(length(cases) - w_s)) {
-    if (evi[i] >= cut && cases[i] > mean(cases[i:(i - 6)])) {
-      test_p[i] = 1
-    }
-    else {
-      test_p[i] = 0
-    }
-    if (mean(cases[(i - (w_s - 1)):i]) <= ratio * mean(cases[(i +
-                                                              1):(i + w_s)])) {
-      true_p[i] = 1
-    }
-    else {
-      true_p[i] = 0
+
+  if(method=="EVI"){
+    for (i in w_s:(length(cases) - w_s)) {
+      if (evi[i] >= cut && cases[i] > mean(cases[i:(i - 6)])) {
+        test_p[i] = 1
+      }
+      else {
+        test_p[i] = 0
+      }
+      if (mean(cases[(i - (w_s - 1)):i]) <= ratio * mean(cases[(i +
+                                                                1):(i + w_s)])) {
+        true_p[i] = 1
+      }
+      else {
+        true_p[i] = 0
+      }
     }
   }
 
