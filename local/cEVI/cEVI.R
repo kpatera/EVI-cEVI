@@ -44,7 +44,7 @@ France<-as.vector(t(gs_27522[gs_27522$`Country/Region`=="France",][5:dim(gs_2752
 
 
 # AFGHANISTAN
-tmp_EVI_af=deviant(new_cases = Afghanistan[1:100],cum = TRUE)
+tmp_EVI_af=deviant(new_cases = Afghanistan[1:100],cum = TRUE,method = "EVI")
 save(tmp_EVI_af,file = "tmp_EVI_af_new.rdata")
 load("tmp_EVI_af_new.rdata")
 tmp_cEVI_af=deviant(new_cases = Afghanistan[1:100],lag_max = 40, cum=TRUE,method = "cEVI")

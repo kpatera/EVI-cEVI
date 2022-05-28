@@ -4,7 +4,7 @@
 \alias{evifcut}
 \title{Sensitivity-Specificity estimation for each cut-off value and rolling window size}
 \usage{
-evifcut(evi, cases, cut, r, method = "EVI")
+evifcut(evi = NA, cevi = NA, cases, cut = NA, r, method = "EVI")
 }
 \arguments{
 \item{evi}{numeric vector - object (obtained from the evi function and stored as ev) that corresponds to the relative change in the standard deviation.}
