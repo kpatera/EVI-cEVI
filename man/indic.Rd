@@ -4,7 +4,7 @@
 \alias{indic}
 \title{Issue of an Early Warning}
 \usage{
-indic(evi = NA, cevi = NA, cut, cases)
+indic(evi = NA, cevi = NA, cut, cases, method = "EVI")
 }
 \arguments{
 \item{evi}{numeric vector - object (obtained from the evi function and stored as ev) that corresponds to the relative change in the standard deviation.}
