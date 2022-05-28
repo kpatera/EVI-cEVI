@@ -26,7 +26,7 @@
 
 
 
-evifcut=function (evi, cases, cut, r,method="EVI")
+evifcut=function (evi, cevi, cases, cut, r,method="EVI")
 {
   w_s = 7
   ratio = 1/(1 + r)
