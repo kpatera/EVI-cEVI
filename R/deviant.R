@@ -130,9 +130,11 @@ deviant=function(new_cases, cum = FALSE, r_a=7, r=0.2, lag_max=30, method="EVI")
     lag_1=3
     c_1=0.001
     w_s=7
-    if (cum == TRUE)
+    if (cum == TRUE){
       new_cases = c(new_cases[1], diff(new_cases))
-    cases=new_cases
+    }
+    cases=mova(new_cases, r_a)
+    #cases=new_cases
     cevi=cEVI_fun(cases = cases[1:(start_cases)],lag_n = lag_1, c_n = c_1)
     ind=indic(cevi=cevi, cases=cases[1:start_cases], method="cEVI")
     status=status(cases[1:start_cases],r)

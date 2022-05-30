@@ -47,7 +47,7 @@ France<-as.vector(t(gs_27522[gs_27522$`Country/Region`=="France",][5:dim(gs_2752
 tmp_EVI_af=deviant(new_cases = Afghanistan[1:170],cum = TRUE,method = "EVI")
 save(tmp_EVI_af,file = "tmp_EVI_af_new.rdata")
 load("tmp_EVI_af_new.rdata")
-tmp_cEVI_af=deviant(new_cases = Afghanistan[1:170],lag_max = 40, cum=TRUE,method = "cEVI")
+tmp_cEVI_af=deviant(new_cases = Afghanistan[1:170],cum = TRUE, lag_max = 40,method = "cEVI")
 save(tmp_cEVI_af,file = "tmp_cEVI_af_new.rdata")
 load("tmp_cEVI_af.rdata")
 
@@ -67,7 +67,7 @@ lines(1:789,tmp_cEVI_af$npv,type = 'l',lty=3,lwd=3)
 tmp_EVI_co=deviant(new_cases = Colombia[1:170],cum = TRUE,method = "EVI")
 #save(tmp_EVI_co,file = "tmp_EVI_co.rdata")
 load("tmp_EVI_co.rdata")
-tmp_cEVI_co=deviant(new_cases = Colombia[1:170],lag_max = 40,method="cEVI")
+tmp_cEVI_co=deviant(new_cases = Colombia[1:170],cum = TRUE, lag_max = 40,method="cEVI")
 #save(tmp_cEVI_co,file = "tmp_cEVI_co.rdata")
 load("tmp_cEVI_co.rdata")
 
