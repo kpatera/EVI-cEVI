@@ -8,7 +8,7 @@
 #' @param evi numeric vector - object (obtained from the evi function and stored as ev) that corresponds to the relative change in the standard deviation.
 #' @param cut threshold value (0 <= c <= 0.5) for issuing an early warning. If evi >= c an early warning is issued and otherwise is not.
 #' @param cases numeric vector with the number of new cases per unit of time (i.e., daily).
-#' @param method either "EVI", "cEVI" or "cEVIplus", default equals to "EVI".
+#' @param method either "EVI", "cEVI" or "cEVIplus (under construction)", default equals to "EVI".
 #'
 #' @examples
 #' ## EVI example ##
@@ -24,7 +24,7 @@
 #' @references
 #' Kostoulas, P., Meletis, E., Pateras, K. et al. The epidemic volatility index, a novel early warning tool for identifying new waves in an epidemic. Sci Rep 11, 23775 (2021). \doi{10.1038/s41598-021-02622-3}
 
-indic=function (evi=NA, cevi=NA, cut, cases, method="EVI")
+indic=function (evi=NA, cevi=NA, cut=NA, cases, method="EVI")
 {
 
   if(method=="EVI"){

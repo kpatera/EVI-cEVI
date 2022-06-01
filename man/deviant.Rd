@@ -4,7 +4,7 @@
 \alias{deviant}
 \title{This function produces the convergence Epidemic Volatility Index based output data (beta)}
 \usage{
-deviant(new_cases, cum = FALSE, r_a = 7, r = 0.2, lag_max = 30, method = "EVI")
+deviant(new_cases, cum = FALSE, r_a = 7, r = 0.2, lag_max = 40, method = "EVI")
 }
 \arguments{
 \item{new_cases}{the time series of the newly observed cases per unit of time (ideally per day).}
@@ -17,7 +17,9 @@ deviant(new_cases, cum = FALSE, r_a = 7, r = 0.2, lag_max = 30, method = "EVI")
 
 \item{lag_max}{Integer. Restriction of the maximum window size for the rolling window size. The default is set to one month (lag_max=30) to prevent excess volatility of past epidemic waves from affecting the most recent volatility estimates and the ability of EVI to warn for upcoming waves that may be smaller and of lower volatility than previous ones.}
 
-\item{method}{either "EVI", "cEVI" or "cEVIplus", default equals to "EVI".}
+\item{method}{either "EVI", "cEVI" or "cEVIplus (under construction)", default equals to "EVI".}
+
+\item{combo}{when multiple indeces are selected, choose whether to combine indeces via conjunction (and, &) or via disjuction (or |)}
 }
 \value{
 \itemize{

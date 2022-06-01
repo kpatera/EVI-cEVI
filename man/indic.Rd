@@ -4,7 +4,7 @@
 \alias{indic}
 \title{Issue of an Early Warning}
 \usage{
-indic(evi = NA, cevi = NA, cut, cases, method = "EVI")
+indic(evi = NA, cevi = NA, cut = NA, cases, method = "EVI")
 }
 \arguments{
 \item{evi}{numeric vector - object (obtained from the evi function and stored as ev) that corresponds to the relative change in the standard deviation.}
@@ -13,7 +13,7 @@ indic(evi = NA, cevi = NA, cut, cases, method = "EVI")
 
 \item{cases}{numeric vector with the number of new cases per unit of time (i.e., daily).}
 
-\item{method}{either "EVI", "cEVI" or "cEVIplus", default equals to "EVI".}
+\item{method}{either "EVI", "cEVI" or "cEVIplus (under construction)", default equals to "EVI".}
 }
 \value{
 A vector of 0s and 1s is produced, where a 1 (Index = 1) is recorded when an early warning is issued and a 0 (Index = 0) when an early warning is not issued.

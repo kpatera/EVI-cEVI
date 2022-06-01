@@ -24,17 +24,17 @@ require(ggplot2)
 #tmp_cEVI_ita=deviant_plus(new_cases = Italy$Cases,lag_max = 40)
 
  library(readr)
- Afghanistan2 <- data.frame(read_csv("Afghanistan_2022-03-23_file.csv"))
- Colombia2 <- data.frame(read_csv("Colombia_2022-03-23_file.csv"))
- India2 <- data.frame(read_csv("India_2022-03-23_file.csv"))
- France2 <- data.frame(read_csv("France_2022-03-23_file.csv"))
+ Afghanistan2 <- data.frame(read_csv("local/Afghanistan_2022-03-23_file.csv"))
+ Colombia2 <- data.frame(read_csv("local/Colombia_2022-03-23_file.csv"))
+ India2 <- data.frame(read_csv("local/India_2022-03-23_file.csv"))
+ France2 <- data.frame(read_csv("local/France_2022-03-23_file.csv"))
  dim(Afghanistan2)
  dim(Colombia2)
  dim(India2)
  dim(France2)
 
 library(readr)
-gs_27522 <- as.data.frame(read_csv("globalcases.csv"))
+gs_27522 <- as.data.frame(read_csv("local/globalcases.csv"))
 Afghanistan<-Colombia<-India<-France<-NULL
 Afghanistan<-as.vector(t(gs_27522[gs_27522$`Country/Region`=="Afghanistan",][5:dim(gs_27522)[2]]))
 Colombia<-as.vector(t(gs_27522[gs_27522$`Country/Region`=="Colombia",][5:dim(gs_27522)[2]]))
@@ -44,10 +44,10 @@ France<-as.vector(t(gs_27522[gs_27522$`Country/Region`=="France",][5:dim(gs_2752
 
 
 # AFGHANISTAN
-tmp_EVI_af=deviant(new_cases = Afghanistan[1:170],cum = TRUE,method = "EVI")
+tmp_EVI_af=deviant(new_cases = Afghanistan,cum = TRUE,method = "EVI")
 save(tmp_EVI_af,file = "tmp_EVI_af_new.rdata")
 load("tmp_EVI_af_new.rdata")
-tmp_cEVI_af=deviant(new_cases = Afghanistan[1:170],cum = TRUE, lag_max = 40,method = "cEVI")
+tmp_cEVI_af=deviant(new_cases = Afghanistan,cum = TRUE, lag_max = 40,method = "cEVI")
 save(tmp_cEVI_af,file = "tmp_cEVI_af_new.rdata")
 load("tmp_cEVI_af.rdata")
 

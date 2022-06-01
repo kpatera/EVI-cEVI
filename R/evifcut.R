@@ -9,7 +9,7 @@
 #' @param cases numeric vector with the number of new cases per unit of time (i.e., daily).
 #' @param cut threshold value (0 <= c <= 0.5) for issuing an early warning. If evi >= c, an early warning is issued and otherwise is not.
 #' @param r Definition for the minimum difference in the mean number of cases, one week before and after each time point that, if present, should be detected. This is the case definition and the default is 0.2 (with 0 <= r <= 1). A value of r=0.2 means that we have a case when the mean number of the newly observed cases in the next 7 days is at least 20% higher than the mean number of the newly observed cases in the past 7 days.
-#' @param method either "EVI", "cEVI" or "cEVIplus", default equals to "EVI".
+#' @param method either "EVI", "cEVI" or "cEVIplus (under construction)", default equals to "EVI".
 #'
 #' @examples
 #' ## EVI Example ##
