@@ -6,10 +6,7 @@
 \alias{cEVIplus-package}
 \title{cEVIplus: Epidemic Volatility Index as an Early-Warning Tool}
 \description{
-Implementation of the epidemic volatility index (EVI), as 
-    discussed by Kostoulas et. al. (2021). EVI is a new, conceptually simple, early warning tool for oncoming epidemic waves. 
-    EVI is based on the volatility of newly reported cases per unit of time,
-    ideally per day, and issues an early warning when the volatility change rate exceeds a threshold.
+Implementation of the epidemic volatility index (EVI), as initially discussed by Kostoulas et. al. (2021). EVI is a new, conceptually simple, early warning tool for oncoming epidemic waves and new epidemics. EVI is based on the volatility of newly reported cases per unit of time, ideally per day, and issues an early warning when the volatility change rate exceeds a threshold. EVI was extended by Pateras et al (2023) based on on Geweke-type test (cEVI) of newly reported cases.
 }
 \seealso{
 Useful links:
@@ -24,6 +21,7 @@ Useful links:
 Authors:
 \itemize{
   \item Konstantinos Pateras \email{kostas.pateras@gmail.com}
+  \item Paolo Eusebi \email{paoloeusebi@gmail.com}
   \item Matt Denwood \email{md@sund.ku.dk}
   \item Polychronis Kostoulas \email{pkost@uth.gr}
 }

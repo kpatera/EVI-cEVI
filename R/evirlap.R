@@ -7,7 +7,7 @@
 #'
 #' For each time point the stored variables are:
 #'@return \itemize{
-#' \item{comb.evi.graph: A graph with two EVI indexes shown simulteounsly.}}
+#' \item{evirlap: A graph with two EVI indexes shown simulteounsly.}}
 
 #' @param EVI1_output e.g. output of the \code{\link[EVI:deviant]{deviant()}} function
 #' @param EVI2_output e.g. output of the \code{\link[EVI:deviant]{deviant_cEVI()}} function
@@ -21,8 +21,8 @@
 #' cEVI_output=deviant_cEVI(new_cases=Italy$Cases, cum=FALSE)
 #'
 #' # Plot the EVI combination graph
-#' evi.graphs.comb(EVI1_output=EVI_output, EVI2_output=cEVI_output, ln=T)
-#' evi.graphs.comb(EVI1_output=EVI_output, EVI2_output=cEVI_output, ln=T, type="l") # For the line EVI plot
+#' evirlap(EVI1_output=EVI_output, EVI2_output=cEVI_output, ln=T)
+#' evirlap(EVI1_output=EVI_output, EVI2_output=cEVI_output, ln=T, type="l") # For the line EVI plot
 #' @export
 #'
 #' @import ggplot2
@@ -30,10 +30,10 @@
 #'
 #'
 #' @references
-#' Pateras K, Meletis E, Kostoulas P, The convergence epidemic volatility index an early warning tool for indentifying waves in an epidemic, 2022
+#' Pateras K, Meletis E, Denwood M, Paolo E, Kostoulas P, The convergence epidemic volatility index an early warning tool for identifying waves in an epidemic, 2022
 
 
-evi.graphs.comb <- function(EVI1_output,EVI2_output, ln=T, type="p",size.evi=1,
+evirlap <- function(EVI1_output,EVI2_output, ln=T, type="p",size.evi=1,
                             EVI1.lab="EVI1",EVI2.lab="EVI2",EVI3.lab="EVI+",EVI.country=NULL) {
 
   #EVI_output=temp
@@ -41,6 +41,8 @@ evi.graphs.comb <- function(EVI1_output,EVI2_output, ln=T, type="p",size.evi=1,
   EVI2_output$Index=EVI2_output$Index*2
   EVI_output=EVI1_output
   EVI_output$Index=EVI_output$Index+EVI2_output$Index
+  if(length(table(EVI_output$Index))<3)
+    EVI_output$Index[1:3]<-1:3
   EVI_output$cases_1=EVI_output$Cases*EVI_output$Index
   EVI_output$cases_1[EVI_output$cases_1 == 0] <- NA
   EVI_output$cases_0=EVI_output$Cases*(1-EVI_output$Index)
@@ -57,11 +59,12 @@ evi.graphs.comb <- function(EVI1_output,EVI2_output, ln=T, type="p",size.evi=1,
     sp3<-ggplot(EVI_output, aes_string(x="Days",group="variable"))+
       list(
         geom_point(aes_string(y=("Cases"), color="Index"), size=size.evi),
+        #scale_color_manual(values=c("grey69", "yellow3", "orange3", "red4")),
+        scale_colour_grey(start = 1,end = 0),
         scale_color_manual(values=c("grey69", "yellow3", "orange3", "red4")),
-        theme(legend.position = "none"),
         labs(title = paste0("Graph combining outputs ",EVI1.lab,", ", EVI2.lab," and ", EVI3.lab," - ",EVI.country), y = "Cases", x="Days"),
         theme(legend.position = "bottom",
-              legend.title = element_text(size=10),
+              legend.title = element_blank(),
               legend.text = element_text(size=8),
               legend.key.height = unit(0, 'cm')),
         if (type=="l")  geom_path(aes_string(y="Cases",colour="Index"),size=size.evi)
@@ -72,11 +75,11 @@ evi.graphs.comb <- function(EVI1_output,EVI2_output, ln=T, type="p",size.evi=1,
     sp3<-ggplot(EVI_output, aes_string(x="Days",group="variable"))+
       list(
         geom_point(aes_string(y="log(Cases)", color="Index"), size=size.evi),
-        scale_color_manual(values=c("grey69", "yellow3", "orange3", "red4")),
-        theme(legend.position = "none"),
+        #scale_color_manual(values=c("grey69", "yellow3", "orange3", "red4")),
+        scale_colour_grey(start = 1,end = 0),
         labs(title = paste0("Graph combining outputs ",EVI1.lab,", ",EVI2.lab," and ",EVI3.lab," - ",EVI.country), y = "log(Cases)", x="Days"),
         theme(legend.position = "bottom",
-              legend.title = element_text(size=10),
+              legend.title = element_blank(),
               legend.text = element_text(size=8),
               legend.key.height = unit(0, 'cm')),
         if (type=="l")  geom_path(aes_string(y="log(Cases)",colour="Index"), size=size.evi)

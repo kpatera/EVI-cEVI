@@ -1,4 +1,4 @@
-#' This function produces the convergence Epidemic Volatility Index based output data (beta)
+#' This function produces the Epidemic Volatility Index based output data (beta)
 #'
 #' This is a secondary function of the \code{\link[EVI:EVI-package]{EVI-package}} that you should use to analyze a time series of observed cases per unit of time (ideally per day). This function is based on ongoing work and should be used with caution.
 #'
@@ -49,7 +49,7 @@
 #' Pateras Konstantinos, Meletis Eleftherios and Kostoulas Polychronis, The convergence epidemic index, an early warning tool for identifying waves in an epidemic, 2022
 #' Kostoulas, P., Meletis, E., Pateras, K. et al. The epidemic volatility index, a novel early warning tool for identifying new waves in an epidemic. Sci Rep 11, 23775 (2021). \doi{10.1038/s41598-021-02622-3}
 
-deviant=function(new_cases, cum = FALSE, r_a=7, r=0.2, lag_max=40, method="EVI"){
+deviant=function(new_cases, cum = FALSE, r_a=7, r=0.2, lag_max=40, method="EVI",test1="ttest"){
   if(method=="EVI"){
     start_time = Sys.time()
     start_cases = 14
@@ -135,7 +135,7 @@ deviant=function(new_cases, cum = FALSE, r_a=7, r=0.2, lag_max=40, method="EVI")
     }
     cases=mova(new_cases, r_a)
     #cases=new_cases
-    cevi=cEVI_fun(cases = cases[1:(start_cases)],lag_n = lag_1, c_n = c_1)
+    cevi=cEVI_fun(cases = cases[1:(start_cases)],lag_n = lag_1, c_n = c_1,test = test)
     ind=indic(cevi=cevi, cases=cases[1:start_cases], method="cEVI")
     status=status(cases[1:start_cases],r)
 
@@ -173,9 +173,21 @@ deviant=function(new_cases, cum = FALSE, r_a=7, r=0.2, lag_max=40, method="EVI")
             # Spectral variances more appropriate but more time consuming
             #den1=spectrum0.ar(case_t[(i+1):(i+w_s)])$spec/(length(case_t[(i+1):(i+w_s)])) # Spectral variances
             #den2=spectrum0.ar(case_t[(i):(i-(w_s-1))])$spec/(length(case_t[(i):(i-(w_s-1))]))
-            test=enu/sqrt(den1+den2)
-            cevi[k+j+1]=as.numeric((1-pnorm(test))<=l)#*as.numeric(evi[i] >= rate)
-          }
+            teststat=enu/sqrt(den1+den2)
+
+            #cevi[k+j+1]=as.numeric((1-pt(q = test,df = j))<=l)#*as.numeric(evi[i] >= rate)
+            #cevi[k+j+1]=as.numeric((1-pnorm(test))<=l)#*as.numeric(evi[i] >= rate)
+            #cevi[k+j+1]=as.numeric((1-pnorm(test))<=l)#*as.numeric(evi[i] >= rate)
+            Nn=length((k+1):(k+j))
+           # if(test=="ztest"){
+            #  cevi[k+j+1]<<-as.numeric((1-pnorm(q = teststat))<=l)#*as.numeric(evi[i] >= rate)
+            #}
+            #if(test=="ttest"){
+
+            #  cevi[k+j+1]<<-as.numeric((1-pt(q = test,df = Nn))<=l)#*as.numeric(evi[i] >= rate)
+            #}
+
+            }
           evicut_t <- evifcut(cevi=cevi,cases = case_t, r = r,method = "cEVI")
           all_lag[[length(all_lag) + 1]] <- j
           all_cut[[length(all_cut) + 1]] <- l
@@ -193,7 +205,7 @@ deviant=function(new_cases, cum = FALSE, r_a=7, r=0.2, lag_max=40, method="EVI")
       lag_n=sesp$all_lag[index]
       c_n=sesp$all_cut[index]
 
-      cevi=cEVI_fun(cases = cases[1:i],lag_n = lag_n, c_n = c_n) #
+      cevi=cEVI_fun(cases = cases[1:i],lag_n = lag_n, c_n = c_n,test = test1) #
       ind_n=indic(cevi = cevi, cases = case_t, method="cEVI") #
       evicut_n=evifcut(cevi = cevi, cases = case_t, r = r, method="cEVI") #
 
@@ -271,8 +283,15 @@ deviant=function(new_cases, cum = FALSE, r_a=7, r=0.2, lag_max=40, method="EVI")
             #den1=spectrum0.ar(case_t[(i+1):(i+w_s)])$spec/(length(case_t[(i+1):(i+w_s)])) # Spectral variances
             #den2=spectrum0.ar(case_t[(i):(i-(w_s-1))])$spec/(length(case_t[(i):(i-(w_s-1))]))
             test=enu/sqrt(den1+den2)
-            cevi[k+j+1]=as.numeric((1-pnorm(test))<=l)#*as.numeric(evi[i] >= rate)
+            Nn=length((k+1):(k+lag_n))
 
+            #cevi[k+j+1]=as.numeric((1-pnorm(test))<=l)#*as.numeric(evi[i] >= rate)
+            if(test=="ztest"){
+              cevi[k+j+1]=as.numeric((1-pnorm(q = test))<=l)#*as.numeric(evi[i] >= rate)
+            }
+            if(test=="ttest"){
+              cevi[k+j+1]=as.numeric((1-pt(q = test,df = Nn))<=l)#*as.numeric(evi[i] >= rate)
+            }
           }
           evicut_t_ceviplus <- evifcut(cevi=cevi,cases = case_t, r = r,method = "cEVIplus")
           all_lag[[length(all_lag) + 1]] <- j

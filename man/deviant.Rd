@@ -2,9 +2,17 @@
 % Please edit documentation in R/deviant.R
 \name{deviant}
 \alias{deviant}
-\title{This function produces the convergence Epidemic Volatility Index based output data (beta)}
+\title{This function produces the Epidemic Volatility Index based output data (beta)}
 \usage{
-deviant(new_cases, cum = FALSE, r_a = 7, r = 0.2, lag_max = 40, method = "EVI")
+deviant(
+  new_cases,
+  cum = FALSE,
+  r_a = 7,
+  r = 0.2,
+  lag_max = 40,
+  method = "EVI",
+  test1 = "ttest"
+)
 }
 \arguments{
 \item{new_cases}{the time series of the newly observed cases per unit of time (ideally per day).}

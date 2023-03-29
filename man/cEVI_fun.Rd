@@ -4,7 +4,7 @@
 \alias{cEVI_fun}
 \title{Calculation of the convergence Epidemic Volatility Index}
 \usage{
-cEVI_fun(cases, lag_n, c_n)
+cEVI_fun(cases, lag_n, c_n, test = "ztest")
 }
 \arguments{
 \item{cases}{the time series of the newly observed cases per unit of time (ideally per day).}

@@ -17,7 +17,7 @@
 #' @references
 #' Pateras K, Meletis E, Kostoulas P, The convergence epidemic volatility index an early warning tool for indentifying waves in an epidemic, 2022
 
-cEVI_fun<-function(cases,lag_n,c_n){
+cEVI_fun<-function(cases,lag_n,c_n, test="ztest"){
 
   cevi <- rep(NA, length(cases))
   for(k in (lag_n-1):(length(cases)-(lag_n+1))){
@@ -28,8 +28,14 @@ cEVI_fun<-function(cases,lag_n,c_n){
     # Spectral variances more appropriate but more time consuming
     #den1=spectrum0.ar(cases[(i+1):(i+w_s)])$spec/(length(cases[(i+1):(i+w_s)])) # Spectral variances
     #den2=spectrum0.ar(cases[(i):(i-(w_s-1))])$spec/(length(cases[(i):(i-(w_s-1))]))
-    test=enu/sqrt(den1+den2)
-    cevi[k+lag_n+1]=as.numeric((1-pnorm(test))<=c_n)#*as.numeric(evi[i] >= rate)
+    testthat=enu/sqrt(den1+den2)
+#    if(test=="ztest"){
+#      cevi[k+lag_n+1]=as.numeric((1-pnorm(q = testthat))<=c_n) #*as.numeric(evi[i] >= rate)
+#    }
+#    if(test=="ttest"){
+       cevi[k + lag_n + 1] = as.numeric((1-pt(q = testthat,df = lag_n-1))<=c_n)
+
+#    }
   }
   return(cevi)
 }
