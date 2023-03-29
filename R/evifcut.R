@@ -9,7 +9,7 @@
 #' @param cases numeric vector with the number of new cases per unit of time (i.e., daily).
 #' @param cut threshold value (0 <= c <= 0.5) for issuing an early warning. If evi >= c, an early warning is issued and otherwise is not.
 #' @param r Definition for the minimum difference in the mean number of cases, one week before and after each time point that, if present, should be detected. This is the case definition and the default is 0.2 (with 0 <= r <= 1). A value of r=0.2 means that we have a case when the mean number of the newly observed cases in the next 7 days is at least 20% higher than the mean number of the newly observed cases in the past 7 days.
-#' @param method either "EVI", "cEVI" or "cEVIplus (under construction)", default equals to "EVI".
+#' @param method either "EVI" or "cEVI", default equals to "EVI".
 #'
 #' @examples
 #' ## EVI Example ##
@@ -23,7 +23,7 @@
 #'
 #' @references
 #' Kostoulas, P., Meletis, E., Pateras, K. et al. The epidemic volatility index, a novel early warning tool for identifying new waves in an epidemic. Sci Rep 11, 23775 (2021). \doi{10.1038/s41598-021-02622-3}
-
+#' Pateras K., Meletis, E., Denwood M., et al. The convergence epidemic index (cEVI) an early warning tool for identifying waves in an epidemic. Inf Dis Mod, (2023)
 
 
 evifcut=function (evi=NA, cevi=NA, cases, cut=NA, r,method="EVI")
@@ -67,30 +67,6 @@ evifcut=function (evi=NA, cevi=NA, cases, cut=NA, r,method="EVI")
       }
     }
   }
-
-  if(method=="cEVIplus"){
-    for (i in w_s:(length(cases)-w_s)){
-      if (evi[i]>=cut && cases[i]>mean(cases[i:(i-6)])){
-        test_p1[i]=1
-      }else{
-        test_p1[i]=0
-      }
-
-      if ((!is.na(cevi[i]) & cevi[i]  == 1) && cases[i]>mean(cases[i:(i-7)])){
-        test_p2[i] <- 1
-      }else{
-        test_p2[i] <- 0
-      }
-
-      if (mean(cases[(i-(w_s-1)):i])<=ratio*mean(cases[(i+1):(i+w_s)])){
-        true_p[i]=1
-      }else{
-        true_p[i]=0
-      }
-    }
-    test_p=max((test_p2+test_p1),1)
-  }
-
 
   sens = length(which(test_p == 1 & true_p == 1))/length(which(true_p == 1))
   spec = length(which(test_p == 0 & true_p == 0))/length(which(true_p == 0))

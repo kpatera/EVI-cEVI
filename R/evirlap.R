@@ -1,28 +1,30 @@
 #' Combining multiple epidemic volatility indices into a multi-early warning index plot
 #'
-#' This function returns an evi.graph containing two indices.
+#' This function returns an overlap graph containing two indices.
 #' 1. If index number 1 results in an early warning,then a yellow point will be shown.
 #' 2. If index number 2 results in an early warning, then a orange point will be shown.
 #' 3. If both indexes result in early warnings, then a red point will be shown.
+#'
+#' The evirlap function can literally combine any two indices with only 2 requirements. The two vectors (Index1, Index2) to be of equal length and to contain either 0s (no warnings) or 1s (warnings).
 #'
 #' For each time point the stored variables are:
 #'@return \itemize{
 #' \item{evirlap: A graph with two EVI indexes shown simulteounsly.}}
 
-#' @param EVI1_output e.g. output of the \code{\link[EVI:deviant]{deviant()}} function
-#' @param EVI2_output e.g. output of the \code{\link[EVI:deviant]{deviant_cEVI()}} function
+#' @param Index1 e.g. output of the \code{\link[EVI:deviant]{deviant(method = 'EVI')}} function
+#' @param Index2 e.g. output of the \code{\link[EVI:deviant]{deviant(method = "cEVI")}} function
 #' @param ln  TRUE or FALSE; If TRUE (the default) the output of the graph will be presented on the logarithmic scale. IF FALSE the output data will be presented on the original scale.
 #' @param type By default, points are plotted on EVI graphs. In cases where, changes are very sudden or data sparsely available, type="l" introduces lines on top of points for the "EVI" type of graph.
 #'
 #' @examples
 #'
 #' # Run basic functions to acquire early warnings results
-#' EVI_output=deviant(new_cases=Italy$Cases, cum=FALSE)
-#' cEVI_output=deviant_cEVI(new_cases=Italy$Cases, cum=FALSE)
+#' EVI_output=deviant(new_cases=Italy$Cases, cum=FALSE, method="EVI")
+#' cEVI_output=deviant(new_cases=Italy$Cases, cum=FALSE, method="cEVI")
 #'
 #' # Plot the EVI combination graph
-#' evirlap(EVI1_output=EVI_output, EVI2_output=cEVI_output, ln=T)
-#' evirlap(EVI1_output=EVI_output, EVI2_output=cEVI_output, ln=T, type="l") # For the line EVI plot
+#' evirlap(Index1=EVI_output, Index2=cEVI_output, ln=T)
+#' evirlap(Index1=EVI_output, Index2=cEVI_output, ln=T, type="l") # For the line EVI plot
 #' @export
 #'
 #' @import ggplot2
@@ -30,59 +32,58 @@
 #'
 #'
 #' @references
-#' Pateras K, Meletis E, Denwood M, Paolo E, Kostoulas P, The convergence epidemic volatility index an early warning tool for identifying waves in an epidemic, 2022
+#' Pateras K., Meletis, E., Denwood M., et al. The convergence epidemic index (cEVI) an early warning tool for identifying waves in an epidemic. Inf Dis Mod, (2023)
 
 
-evirlap <- function(EVI1_output,EVI2_output, ln=T, type="p",size.evi=1,
-                            EVI1.lab="EVI1",EVI2.lab="EVI2",EVI3.lab="EVI+",EVI.country=NULL) {
+evirlap <- function(Index1,Index2, ln=T, type="p",size.index=1,
+                            Index1.lab="EVI1",Index2.lab="EVI2",Index3.lab="EVI-",Index.country=NULL) {
 
-  #EVI_output=temp
-  EVI1_output$Index=EVI1_output$Index
-  EVI2_output$Index=EVI2_output$Index*2
-  EVI_output=EVI1_output
-  EVI_output$Index=EVI_output$Index+EVI2_output$Index
-  if(length(table(EVI_output$Index))<3)
-    EVI_output$Index[1:3]<-1:3
-  EVI_output$cases_1=EVI_output$Cases*EVI_output$Index
-  EVI_output$cases_1[EVI_output$cases_1 == 0] <- NA
-  EVI_output$cases_0=EVI_output$Cases*(1-EVI_output$Index)
-  EVI_output$cases_0[EVI_output$cases_0 == 0] <- NA
+  Index1$Index=Index1$Index
+  Index2$Index=Index2$Index*2
+  Index=Index1
+  Index$Index=Index$Index+Index2$Index
+  if(length(table(Index$Index))<3)
+    Index$Index[1:3]<-1:3
+  Index$cases_1=Index$Cases*Index$Index
+  Index$cases_1[Index$cases_1 == 0] <- NA
+  Index$cases_0=Index$Cases*(1-Index$Index)
+  Index$cases_0[Index$cases_0 == 0] <- NA
 
-  EVI_output$npv=EVI_output$npv*(1-EVI_output$Index)
-  EVI_output$npv[EVI_output$npv == 0] <- NA
-  EVI_output$ppv=EVI_output$ppv*EVI_output$Index
-  EVI_output$ppv[EVI_output$ppv == 0] <- NA
-  EVI_output$variable<-"x"
-  EVI_output$Index[is.na(EVI_output$Index)]<-0
-  EVI_output$Index<-factor(EVI_output$Index,labels = c("No warning",paste(EVI1.lab,"alone"),paste(EVI2.lab,"alone"),EVI3.lab))
+  Index$npv=Index$npv*(1-Index$Index)
+  Index$npv[Index$npv == 0] <- NA
+  Index$ppv=Index$ppv*Index$Index
+  Index$ppv[Index$ppv == 0] <- NA
+  Index$variable<-"x"
+  Index$Index[is.na(Index$Index)]<-0
+  Index$Index<-factor(Index$Index,labels = c("No warning",paste(Index1.lab,"alone"),paste(Index2.lab,"alone"), Index3.lab))
   if (ln==F) {
-    sp3<-ggplot(EVI_output, aes_string(x="Days",group="variable"))+
+    sp3<-ggplot(Index, aes_string(x="Days",group="variable"))+
       list(
-        geom_point(aes_string(y=("Cases"), color="Index"), size=size.evi),
+        geom_point(aes_string(y=("Cases"), color="Index"), size=size.index),
         #scale_color_manual(values=c("grey69", "yellow3", "orange3", "red4")),
         scale_colour_grey(start = 1,end = 0),
         scale_color_manual(values=c("grey69", "yellow3", "orange3", "red4")),
-        labs(title = paste0("Graph combining outputs ",EVI1.lab,", ", EVI2.lab," and ", EVI3.lab," - ",EVI.country), y = "Cases", x="Days"),
+        labs(title = paste0("Graph combining outputs ",Index1.lab,", ", Index2.lab," and ", Index3.lab," - ",Index.country), y = "Cases", x="Days"),
         theme(legend.position = "bottom",
               legend.title = element_blank(),
               legend.text = element_text(size=8),
               legend.key.height = unit(0, 'cm')),
-        if (type=="l")  geom_path(aes_string(y="Cases",colour="Index"),size=size.evi)
+        if (type=="l")  geom_path(aes_string(y="Cases",colour="Index"),size=size.index)
       )
   }
 
   if (ln==T) {
-    sp3<-ggplot(EVI_output, aes_string(x="Days",group="variable"))+
+    sp3<-ggplot(Index, aes_string(x="Days",group="variable"))+
       list(
-        geom_point(aes_string(y="log(Cases)", color="Index"), size=size.evi),
+        geom_point(aes_string(y="log(Cases)", color="Index"), size=size.index),
         #scale_color_manual(values=c("grey69", "yellow3", "orange3", "red4")),
         scale_colour_grey(start = 1,end = 0),
-        labs(title = paste0("Graph combining outputs ",EVI1.lab,", ",EVI2.lab," and ",EVI3.lab," - ",EVI.country), y = "log(Cases)", x="Days"),
+        labs(title = paste0("Graph combining outputs ",Index1.lab,", ", Index2.lab," and ", Index3.lab," - ",Index.country), y = "log(Cases)", x="Days"),
         theme(legend.position = "bottom",
               legend.title = element_blank(),
               legend.text = element_text(size=8),
               legend.key.height = unit(0, 'cm')),
-        if (type=="l")  geom_path(aes_string(y="log(Cases)",colour="Index"), size=size.evi)
+        if (type=="l")  geom_path(aes_string(y="log(Cases)",colour="Index"), size=size.index)
       )
   }
   print(sp3)

@@ -5,21 +5,21 @@
 \title{Combining multiple epidemic volatility indices into a multi-early warning index plot}
 \usage{
 evirlap(
-  EVI1_output,
-  EVI2_output,
+  Index1,
+  Index2,
   ln = T,
   type = "p",
-  size.evi = 1,
-  EVI1.lab = "EVI1",
-  EVI2.lab = "EVI2",
-  EVI3.lab = "EVI+",
-  EVI.country = NULL
+  size.index = 1,
+  Index1.lab = "EVI1",
+  Index2.lab = "EVI2",
+  Index3.lab = "EVI-",
+  Index.country = NULL
 )
 }
 \arguments{
-\item{EVI1_output}{e.g. output of the \code{\link[EVI:deviant]{deviant()}} function}
+\item{Index1}{e.g. output of the \code{\link[EVI:deviant]{deviant(method = 'EVI')}} function}
 
-\item{EVI2_output}{e.g. output of the \code{\link[EVI:deviant]{deviant_cEVI()}} function}
+\item{Index2}{e.g. output of the \code{\link[EVI:deviant]{deviant(method = "cEVI")}} function}
 
 \item{ln}{TRUE or FALSE; If TRUE (the default) the output of the graph will be presented on the logarithmic scale. IF FALSE the output data will be presented on the original scale.}
 
@@ -30,7 +30,7 @@ evirlap(
 \item{evirlap: A graph with two EVI indexes shown simulteounsly.}}
 }
 \description{
-This function returns an evi.graph containing two indices.
+This function returns an overlap graph containing two indices.
 \enumerate{
 \item If index number 1 results in an early warning,then a yellow point will be shown.
 \item If index number 2 results in an early warning, then a orange point will be shown.
@@ -38,18 +38,20 @@ This function returns an evi.graph containing two indices.
 }
 }
 \details{
+The evirlap function can literally combine any two indices with only 2 requirements. The two vectors (Index1, Index2) to be of equal length and to contain either 0s (no warnings) or 1s (warnings).
+
 For each time point the stored variables are:
 }
 \examples{
 
 # Run basic functions to acquire early warnings results
-EVI_output=deviant(new_cases=Italy$Cases, cum=FALSE)
-cEVI_output=deviant_cEVI(new_cases=Italy$Cases, cum=FALSE)
+EVI_output=deviant(new_cases=Italy$Cases, cum=FALSE, method="EVI")
+cEVI_output=deviant(new_cases=Italy$Cases, cum=FALSE, method="cEVI")
 
 # Plot the EVI combination graph
-evirlap(EVI1_output=EVI_output, EVI2_output=cEVI_output, ln=T)
-evirlap(EVI1_output=EVI_output, EVI2_output=cEVI_output, ln=T, type="l") # For the line EVI plot
+evirlap(Index1=EVI_output, Index2=cEVI_output, ln=T)
+evirlap(Index1=EVI_output, Index2=cEVI_output, ln=T, type="l") # For the line EVI plot
 }
 \references{
-Pateras K, Meletis E, Denwood M, Paolo E, Kostoulas P, The convergence epidemic volatility index an early warning tool for identifying waves in an epidemic, 2022
+Pateras K., Meletis, E., Denwood M., et al. The convergence epidemic index (cEVI) an early warning tool for identifying waves in an epidemic. Inf Dis Mod, (2023)
 }

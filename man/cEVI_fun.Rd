@@ -4,7 +4,7 @@
 \alias{cEVI_fun}
 \title{Calculation of the convergence Epidemic Volatility Index}
 \usage{
-cEVI_fun(cases, lag_n, c_n, test = "ztest")
+cEVI_fun(cases, lag_n, c_n)
 }
 \arguments{
 \item{cases}{the time series of the newly observed cases per unit of time (ideally per day).}
@@ -24,8 +24,11 @@ For each time point the stored variables are:}
 \item{EVI: the estimated EVI for each time point.}}
 }
 \description{
-This function produces the convergence Epidemic Volatility Index based on input data.
+This sencondary function produces the convergence Epidemic Volatility Index based on input data.
+}
+\examples{
+cEVI_fun(c(0,0,1,3,4,10,40,90,105),7,0.1)
 }
 \references{
-Pateras K, Meletis E, Kostoulas P, The convergence epidemic volatility index an early warning tool for indentifying waves in an epidemic, 2022
+Pateras K., Meletis, E., Denwood M., et al. The convergence epidemic index (cEVI) an early warning tool for identifying waves in an epidemic. Inf Dis Mod, (2023)
 }
