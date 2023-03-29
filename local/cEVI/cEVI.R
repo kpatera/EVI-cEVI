@@ -1,6 +1,6 @@
 # Load functions and rest of EVI package #####
 remotes::install_github("kpatera/EVI-cEVI",force=T)
-require(EVI)
+#require(EVI)
 library(cEVIplus)
 require(gridExtra)
 require(ggplot2)

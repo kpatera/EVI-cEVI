@@ -5,7 +5,8 @@
 \title{Deviant Updater function}
 \usage{
 deviant_update(
-  new_cases,
+  all_cases = NA,
+  new_cases = NA,
   EVI_input,
   cum = FALSE,
   r_a = 7,
@@ -42,7 +43,20 @@ EVI_output<-deviant(new_cases=Italy$Cases[1:50], cum=FALSE, r_a=7, r=0.2, lag_ma
 
 EVI_output2<-deviant_update(new_cases = c(100,93,80,54,12),EVI_input=EVI_output,method = "EVI")
 
+EVI_output2
+
+# Same as above EVI_output2
+
+EVI_output2<-deviant_update(all_cases = c(Italy$Cases[1:50],100,93,80,54,12),EVI_input=EVI_output,method = "EVI")
+
+EVI_output2
+
+
 EVI_output3<-deviant_update(new_cases = c(2,2,10,1,0),EVI_input=EVI_output2, method = "cEVI")
+
+EVI_output3
+
+# Even though EVI and cEVI can be used interchangeabily, we suggest users to stick to the initial method.
 
 }
 \references{

@@ -22,7 +22,20 @@
 #'
 #'EVI_output2<-deviant_update(new_cases = c(100,93,80,54,12),EVI_input=EVI_output,method = "EVI")
 #'
+#'EVI_output2
+#'
+#'# Same as above EVI_output2
+#'
+#'EVI_output2<-deviant_update(all_cases = c(Italy$Cases[1:50],100,93,80,54,12),EVI_input=EVI_output,method = "EVI")
+#'
+#'EVI_output2
+#'
+#'
 #'EVI_output3<-deviant_update(new_cases = c(2,2,10,1,0),EVI_input=EVI_output2, method = "cEVI")
+#'
+#'EVI_output3
+#'
+#'# Even though EVI and cEVI can be used interchangeabily, we suggest users to stick to the initial method.
 #'
 #' @export
 #'
@@ -32,7 +45,7 @@
 
 
 
-deviant_update=function(new_cases, EVI_input, cum = FALSE, r_a=7, r=0.2, lag_max=30, method="EVI"){
+deviant_update=function(all_cases=NA, new_cases=NA, EVI_input, cum = FALSE, r_a=7, r=0.2, lag_max=30, method="EVI"){
 
 
   if(method=="EVI"){
@@ -47,17 +60,19 @@ deviant_update=function(new_cases, EVI_input, cum = FALSE, r_a=7, r=0.2, lag_max
     w_s=7
   }
 
-
-
-
-
   if (cum == TRUE) new_cases = c(new_cases[1], diff(new_cases))
 
-  if (!exists("EVI_output"))
-    stop("Please run the deviant function first")
+  if ((!is.na(sum(all_cases)) & !is.na(sum(new_cases))) | (is.na(sum(all_cases)) & is.na(sum(new_cases))))
+    stop("Please provide either new cases or all cases (old+new) as input")
 
+  if(!is.na(sum(all_cases))){
   #calculate the moving average of new confrimed cases
   cases=mova(c(EVI_input$new_cases,new_cases),r_a)
+  }
+  if(!is.na(sum(new_cases))){
+    #calculate the moving average of new confrimed cases
+    cases=mova(c(EVI_input$new_cases,new_cases),r_a)
+  }
 
   roll=rollsd(cases[1:start_cases],lag_1)
   ev=evi(roll)
