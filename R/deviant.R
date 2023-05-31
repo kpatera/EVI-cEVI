@@ -183,7 +183,7 @@ deviant=function(new_cases, cum = FALSE, r_a=7, r=0.2, lag_max=40, method="EVI")
             #}
             #if(test=="ttest"){
 
-              cevi[k+j+1]<<-as.numeric((1-pt(q = test,df = Nn))<=l)
+              cevi[k+j+1]<-as.numeric((1-pt(q = teststat,df = Nn))<=l)
               #}
 
             }
@@ -204,7 +204,7 @@ deviant=function(new_cases, cum = FALSE, r_a=7, r=0.2, lag_max=40, method="EVI")
       lag_n=sesp$all_lag[index]
       c_n=sesp$all_cut[index]
 
-      cevi=cEVI_fun(cases = cases[1:i],lag_n = lag_n, c_n = c_n,test = test1) #
+      cevi=cEVI_fun(cases = cases[1:i],lag_n = lag_n, c_n = c_n) #
       ind_n=indic(cevi = cevi, cases = case_t, method="cEVI") #
       evicut_n=evifcut(cevi = cevi, cases = case_t, r = r, method="cEVI") #
 
