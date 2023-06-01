@@ -39,13 +39,14 @@
 #' data("Italy")
 #' deviant(new_cases=Italy$Cases, cum=FALSE, r_a=7, r=0.2, lag_max=30,method="EVI")
 #' #This step should take some time and the time elapsed will be printed
+#' deviant(new_cases=Italy$Cases, cum=FALSE, r_a=7, r=0.2, lag_max=30,method="cEVI")
 #'
 #' @importFrom stats sd
 #'
 #' @export
 #'
 #' @references
-#' Pateras K., Meletis, E., Denwood M., et al. The convergence epidemic index (cEVI) an early warning tool for identifying waves in an epidemic. Inf Dis Mod, (2023)
+#' Pateras K., Meletis, E., Denwood M., et al. The convergence epidemic index (cEVI) an early warning tool for identifying waves in an epidemic. Inf Dis Mod, (2023). \doi{10.1016/j.idm.2023.05.001}
 #' Kostoulas, P., Meletis, E., Pateras, K. et al. The epidemic volatility index, a novel early warning tool for identifying new waves in an epidemic. Sci Rep 11, 23775 (2021). \doi{10.1038/s41598-021-02622-3}
 #'
 deviant=function(new_cases, cum = FALSE, r_a=7, r=0.2, lag_max=40, method="EVI"){

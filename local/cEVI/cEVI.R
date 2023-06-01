@@ -59,7 +59,7 @@ N=dim(Colombia2)[1]
 
 
 # COLOMBIA #####
-tmp_EVI_co=deviant(new_cases = Colombia,cum = TRUE,method = "EVI")
+#tmp_EVI_co=deviant(new_cases = Colombia,cum = TRUE,method = "EVI")
 save(tmp_EVI_co,file = "tmp_EVI_co_new.rdata")
 load("tmp_EVI_co.rdata")
 #tmp_cEVI_co=deviant(new_cases = Colombia, cum = TRUE, lag_max = 40, method="cEVI")
